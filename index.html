@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>LuitorSlide</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+     <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <style>
+      body{
+        background-image: url("img/images.jpg");
+      }
+    </style>
+  </head>
+  <body>
+  <div class="container form-horizontal">
+    <!--<form class="form-horizontal">-->
+    <!-- <br> -->
+    <br>
+  <!-- <div class="container"> -->
+  <table border="1" class="table" style="width:320px;margin:auto;background-image: url('img/fondos01_www.gratis.es.jpg');box-shadow:1px 1px 10px #999">
+    <tr>
+      <td colspan="3">
+        <div style="text-align:center;font-size:20px;">Converter binary to gray</div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span style="color:#F85118;"><b>numero decimal</b></span>
+      </td>
+      <td>
+        <input type="text" class="inputs" id="num" value="23,4375" style="height:30px;width:100px;">
+        <input type="text" id="base" value="10" style="height:20px;width:20px;"><br>
+
+      </td>
+      <td>
+        <span class="glyphicon glyphicon-pencil" onclick="$('#num').val('');$('#num').focus();$('.inputs').css({'background-color': ''});" style="cursor:pointer;"></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span style="color:blue;"><b>numero binario</b></span>
+      </td>
+      <td>
+        <input type="text" class="inputs" id="binario" value="10101" style="height:30px;width:130px;"><br>
+      </td>
+      <td>
+        <span class="glyphicon glyphicon-pencil" onclick="$('#binario').val('');$('#binario').focus();$('.inputs').css({'background-color': ''});" style="cursor:pointer;"></span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span style="color:green;"><b>numero gray</b></span>
+      </td>
+      <td>
+        <input type="text" class="inputs" id="gray" value="10110" style="height:30px;width:130px;">
+      </td>
+      <td>
+      <span class="glyphicon glyphicon-pencil" onclick="$('#gray').val('');$('#gray').focus();$('.inputs').css({'background-color': ''});" style="cursor:pointer;"></span>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+      <div id="aviso_urg" style="color:red;text-align:center;"></div>
+        <button class="btn btn-default" style="width:100%;" onclick="calcular('decimal_binary_gray');$('.inputs').css({'background-color': ''});$('#num').css({'background-color': ''});$('#binario').css({'background-color': '#F8FDB5'});$('#gray').css({'background-color': '#FFFF84'});"><b><span style='color:#FD5C0F;'>decimal</span> -> <span style="color:blue;">binary</span> -> <span style="color:green;">gray</span></b></button><br>
+        <button class="btn btn-default" style="width:100%;" onclick="converter_to_gray('binary_gray');$('.inputs').css({'background-color': ''});$('#gray').css({'background-color': 'yellow'});"><span style="color:blue;"><b>binary</b></span> -> <span style='color:green;'><b>gray</b></span></button><br>
+        <button class="btn btn-default" style="width:100%;" onclick="converter_gray_to_binary('okay');$('.inputs').css({'background-color': ''});$('#binario').css({'background-color': 'yellow'});"><b><span style="color:green;">gray</span> -> <span style="color:blue;">binary</span></b></button><br>
+        
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <span style="color:#5889A3;">Created by Luis Torres - rights reserved</span>
+      </td>
+    </tr>
+  </table>
+   
+<div align="center">
+
+
+
+ <input type="text" id="base_converte" value="2" style="height:20px;width:20px;display:none;">
+<br>
+<!-- <div id="resultado"></div> -->
+<br><br>
+<div style="display:none;">
+<div id="resultado2" style="color:blue; font-size:20px;"></div>
+resultado en gray:
+<div id="result_gray"></div>
+<button onclick="converter_to_gray();">converter a gray</button>
+<!-- su representacion es: <br>
+<div id="resultado_representacion1"></div>
+su representacion negativa con es: <br>
+<div id="resultado_representacion2"></div>
+<div id="code_all"></div>
+ --></div>
+    
+<script>
+
+function converter_gray_to_binary(accion){
+  data = $("#gray").val();
+
+
+
+    data = data.split(",");
+    
+    data_int = data[0]+"";
+    data_float = data[1]+"";
+
+    n_data_int = data_int.length;
+    n_data_float = data_float.length;
+    // Operamos enteros
+    data_count_binary = data_int[0]+"";
+    x = data_count_binary;
+    for( i=1;i<n_data_int;i++ ){
+    // alert("entro");
+      x = parseInt(x) + parseInt(data_int[i]);
+      if( x == 2 ){
+        x = 0;
+      }
+      data_count_binary+= x+"";
+      // x = parseInt(data_int[i]) + parseInt(data_int[i+1]);
+      
+       // data_int_count+=x+"";
+       // $("#result_gray").html(data_int_count);
+    
+    }
+    $("#binario").val(data_count_binary);
+
+    if(data[1]){
+      // alert("netor");
+
+      //Operamos decimales
+      data_count_binary2 = data_float[0]+"";
+      x = data_count_binary2;
+      for( i=1;i<n_data_float;i++ ){
+      // alert("entro");
+        x = parseInt(x) + parseInt(data_float[i]);
+        if( x == 2 ){
+          x = 0;
+        }
+        data_count_binary2+= x+"";
+        // x = parseInt(data_float[i]) + parseInt(data_int[i+1]);
+        
+         // data_int_count+=x+"";
+         // $("#result_gray").html(data_int_count);
+      
+      }
+      data_count = data_count_binary + ","+data_count_binary2;
+      $("#binario").val(data_count);
+    }
+
+  
+
+}
+function converter_to_gray(accion){
+  // alert(accion);
+  // alert("entro gray");
+  data = $("#resultado2").html();
+  // alert(data);
+  
+
+
+    if( accion == "binary_gray" ){
+      data = $("#binario").val();    
+    }else{
+      $("#binario").val(data);
+    }
+
+    data = data.split(",");
+    
+    data_int = data[0]+"";
+    data_float = data[1]+"";
+
+    n_data_int = data_int.length;
+    n_data_float = data_float.length;
+  // operaremos los enteros primero
+    data_int_count = data_int[0]+"";
+    for( i=0;i<n_data_int-1;i++ ){
+      x = parseInt(data_int[i]) + parseInt(data_int[i+1]);
+      if( x == 2 ){
+        x = 0;
+      }
+       data_int_count+=x+"";
+       $("#result_gray").html(data_int_count);
+
+       
+    }
+    data_total = data_int_count;
+    // alert(data_float);
+    if( data_float != "undefined" ){
+
+  // Operamos ahora los decimales
+      data_float_count = data_float[0]+"";
+      for( i=0;i<n_data_float-1;i++ ){
+        x = parseInt(data_float[i]) + parseInt(data_float[i+1]);
+        if( x == 2 ){
+          x = 0;
+        }
+         data_float_count+=x+"";
+      }
+      $("#result_gray").append(","+data_float_count);
+    data_total+= ","+data_float_count;
+    }
+    $("#gray").val(data_total);
+}
+//codigo script
+function calcular(accion){
+  // alert(accion);
+  switch(accion){
+    case 'decimal_binary_gray':
+      // $("#num").val("");
+    break;
+
+    case 'gray_binary':
+      // alert(hola);
+      $("#num").val("");
+      $("#base").val(2);      
+    break;
+  }
+
+  num = $("#num").val();
+  num = num.split(",");
+  num_decimal = num[1];
+  num = num[0];
+
+  // Comprobamos la existencia del signo
+  num_aux = num+"";
+  num_sig = num_aux[0];
+  // solo para el simbolo
+  sig = 0;
+
+  base = $("#base").val();
+  base_converte = $("#base_converte").val();
+
+
+  //caso especial
+  if( base_converte > 1 && base > 1 || base == "" || base_converte == "" ){
+    //en caso de vacio en base se sobre entiende que es 10
+    if(base == ""){
+      base = 10;
+    }
+    if(base_converte == ""){
+      base_converte = 10;
+    }
+    cant = 0;
+
+    if( num < 10 ){
+      cant++;
+    }else{
+      x = num;
+      while (x >= 10 ){
+        x = x / 10;
+        cant++;
+      }
+      cant++;
+    }
+    //imprimimos
+      // $("#resultado").html(cant);
+      
+    //una ves obtenido el rango, procedemos a uilizar la ecuacion
+    //s: se encarga de acumular toda la suma de la ecuacion
+    s = 0;
+    exp = cant;
+    for(i=0; i<cant; i++){
+      exp--;
+      s = s + num[i]*Math.pow(base,exp);
+    }
+    $("#resultado").html(s);
+    // pues bien, ahora utilizamos la divicion sucesiva con la base al
+    // que se desea transformar en base al resultado del S:acumulado
+    h = 0;
+    res_div = s;
+    A = new Array(200);
+    while( base_converte <= res_div ){
+      res_mod = parseInt(res_div % base_converte);
+      res_div = parseInt(res_div / base_converte);
+      h++;
+      A[h] = res_mod;
+      
+    }
+    h++;
+    A[h] = res_div;
+    respuesta = "";
+    for(i=h; i>=1; i--){
+      respuesta += A[i];
+    }
+
+
+
+    $("#resultado2").html(respuesta);
+    calcular_decimal(num_decimal);
+        // alert("entro");
+
+
+  }else{
+    respuesta = "No ingresar valores menor o igual a 1 para transformar";
+    $("#resultado2").html(respuesta);
+  }
+
+}
+function num_polaridad(resultado){
+  if( sig == "-" ){
+    resultado = "1"+resultado;
+  }else{
+    if(sig == 0){
+
+    }else{
+      resultado = "0"+resultado;
+      
+    }
+  }
+  $("#resultado_representacion1").html(resultado);
+  resultado = resultado.split(",");
+  
+  result_int = resultado[0]+"";
+  n_result_int = result_int.length;
+
+  // aplicamos complemento
+  result_int_acu = "";
+  for( i=0;i<n_result_int;i++ ){
+    if( result_int[i] == 1 ){
+      result_int_acu+= 0+"";
+    }else{
+      result_int_acu+= 1+"";
+    }
+  }
+  $("#resultado_representacion2").html(result_int_acu);
+  result_float = resultado[1];
+  n_result_float = result_float.length;
+  // alert(result_float);
+  if(result_float){
+    // alert("entro");
+    result_float_acu = "";
+    for( i=0;i<n_result_float;i++ ){
+      if( result_float[i] == 1 ){
+        result_float_acu+= 0+"";
+      }else{
+        result_float_acu+= 1+"";
+      }
+    } 
+  resultado_final = result_int_acu+","+result_float_acu;
+
+  $("#resultado_representacion2").html(resultado_final);
+
+   }
+
+
+}
+function calcular_decimal(num_decimal){
+  if( $("#base_converte").val() == 2 ){
+
+
+    if(num_decimal){
+      num_decimal = "0."+num_decimal;
+      num_decimal = parseFloat(num_decimal);
+      
+      acumulativo = "";
+      // alert(num_decimal);
+
+      // while(num_decimal >= 1){
+      for(i=1;i<=4;i++){
+        
+        num_decimal = num_decimal *2;
+        // alert(num_decimal);
+
+        if( num_decimal >= 1 ){
+
+        num_decimal = num_decimal+"";
+        num_entero = num_decimal[0];
+        acumulativo+= num_entero+"";
+
+        num_decimal = parseFloat(num_decimal);
+        num_decimal = num_decimal - 1;
+          
+        }else{
+          acumulativo+= "0";
+        }
+      
+      }
+    $("#resultado2").append(","+acumulativo);
+    $("#binario").append(","+acumulativo);
+    }
+    resultado = $("#resultado2").html();
+  }else{
+    $("#resultado_representacion1").html("solo base 2");
+    $("#resultado_representacion2").html("solo base 2");
+  }
+
+converter_to_gray('na');
+binario = $("#resultado2").html();
+$("#binario").val(binario);
+}
+
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
